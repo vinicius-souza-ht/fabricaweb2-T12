@@ -6,15 +6,15 @@
 	<groupId>br.com.fabricadeprogramador</groupId>
 	<artifactId>fabricaweb2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>fabricaweb2</name>
-	<description>Projeto Fabrica de Programador Modulo 4</description>
+	<description>Demo project for Spring Boot</description>
 
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.RELEASE</version>
+		<groupId>org.joinfaces</groupId>
+		<artifactId>jsf-spring-boot-parent</artifactId>
+		<version>2.1.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -29,17 +29,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
-		<!-- Banco de dados PostgreSQL -->
+		
 		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.1-901-1.jdbc4</version>
+			<groupId>org.joinfaces</groupId>
+			<artifactId>jsf-spring-boot-starter</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 		</dependency>
 
 		<dependency>
@@ -47,6 +45,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -57,6 +56,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

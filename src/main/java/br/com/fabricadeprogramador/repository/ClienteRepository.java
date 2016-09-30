@@ -10,8 +10,7 @@ import org.springframework.stereotype.Repository;
 import br.com.fabricadeprogramador.model.Cliente;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
-
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	@Query("select cli from Cliente cli where cli.email=:email")
 	public Cliente buscarPorEmail(@Param("email") String email);
 	

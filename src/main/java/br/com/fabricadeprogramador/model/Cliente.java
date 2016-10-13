@@ -4,17 +4,24 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Cliente {
 
-	@Id @GeneratedValue 
+	@Id 
+	@GeneratedValue 
 	private Long id;
 	
 	private String nome;
 	
 	@Column(nullable=false, length=50)
 	private String email;
+	
+	@JoinColumn
+	@ManyToOne
+	private Estado estado;
 
 	
 	public Cliente() {
@@ -46,6 +53,14 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public Estado getEstado() {
+		return estado;
+	}
+	
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 	
 	

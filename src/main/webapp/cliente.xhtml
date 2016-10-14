@@ -11,7 +11,10 @@
 
 	<h:form id="frmCliente">
 		Nome: <h:inputText value="#{clienteController.cliente.nome}" />
-		E-mail:	<h:inputText value="#{clienteController.cliente.email}" />
+		Contato:<h:inputText id="frmContato" value="#{clienteController.contatoDescricao}" />
+				<h:commandButton action="#{clienteController.salvarContato}" value="+">
+				<f:ajax execute="frmContato" render="frmContato dtContato"></f:ajax>
+				</h:commandButton>
 		Estado: <h:selectOneMenu value="#{clienteController.cliente.estado}" converter="#{estadoConverter}">
 					<f:selectItem noSelectionOption="true"  itemValue="" itemLabel=".:Selecione:."/>
 					<f:selectItems value="#{estadoController.estados}" var="e" itemLabel="#{e.uf}"/>
@@ -26,6 +29,19 @@
 			<f:ajax render="frmCliente"></f:ajax>
 		</h:commandButton>
 
+		<h:dataTable border="1" value="#{clienteController.cliente.contatos}" var="co"
+		 id="dtContato">
+			<h:column>
+			<f:facet name="header">Descrição</f:facet>
+			#{co.descricao}
+			</h:column>
+					<h:column>
+				<f:facet name="header">Ação</f:facet>
+				<h:commandButton action="#{clienteController.excluirContato(co)}" value="-" onclick="return window.confirm('Certeza?')" >
+					<f:ajax render="frmCliente:dtContato"/>
+				</h:commandButton>
+				</h:column>
+		</h:dataTable>
 
 		<h:dataTable value="#{clienteController.clientes}" var="c"
 			id="dtCliente">
@@ -37,11 +53,7 @@
 				<f:facet name="header">Nome</f:facet>
 				#{c.nome}
 			</h:column>
-			<h:column>
-				<f:facet name="header">E-mail</f:facet>
-				#{c.email}
-			</h:column>
-			
+		
 			<h:column>
 				<f:facet name="header">UF</f:facet>
 				#{c.estado.uf}

@@ -1,11 +1,16 @@
 package br.com.fabricadeprogramador.model;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente {
@@ -16,19 +21,21 @@ public class Cliente {
 	
 	private String nome;
 	
-	@Column(nullable=false, length=50)
-	private String email;
-	
 	@JoinColumn
 	@ManyToOne
 	private Estado estado;
 
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="cliente", fetch=FetchType.EAGER, orphanRemoval=true)
+	private List<Contato> contatos = new ArrayList<>();
 	
+	
+	
+
 	public Cliente() {
 	}
-	public Cliente(String nome, String email) {
+	
+	public Cliente(String nome) {
 		this.nome=nome;
-		this.email=email;
 	}
 
 	public Long getId() {
@@ -47,14 +54,6 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
 	public Estado getEstado() {
 		return estado;
 	}
@@ -63,5 +62,11 @@ public class Cliente {
 		this.estado = estado;
 	}
 	
-	
+	public List<Contato> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(List<Contato> contatos) {
+		this.contatos = contatos;
+	}
 }

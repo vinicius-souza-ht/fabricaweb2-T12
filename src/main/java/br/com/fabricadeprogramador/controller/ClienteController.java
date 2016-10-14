@@ -9,6 +9,7 @@ import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.fabricadeprogramador.model.Cliente;
+import br.com.fabricadeprogramador.model.Contato;
 import br.com.fabricadeprogramador.repository.ClienteRepository;
 
 @Named
@@ -23,6 +24,8 @@ public class ClienteController {
 	private Cliente cliente =  new Cliente();
 
 	private boolean modoEdicao=false;
+	
+	private String contatoDescricao;
 	
 	@PostConstruct
 	public void init() {
@@ -51,6 +54,24 @@ public class ClienteController {
 		cliente = new Cliente();
 		setModoEdicao(false);
 	}
+	
+	public void salvarContato(){
+		Contato contato = new Contato();
+		contato.setDescricao(contatoDescricao);
+		contato.setCliente(cliente);
+		cliente.getContatos().add(contato);
+		contatoDescricao = "";
+	}
+	
+	public void excluirContato(Contato contato){
+		System.out.println(contato.getDescricao());
+		cliente.getContatos().remove(contato);
+		
+				for (Contato co : cliente.getContatos()) {
+					System.out.println(co.getDescricao());
+				}
+		
+	}
 
 	public Cliente getCliente() {
 		return cliente;
@@ -72,4 +93,11 @@ public class ClienteController {
 	public void setModoEdicao(boolean modoEdicao) {
 		this.modoEdicao = modoEdicao;
 	}
+	public String getContatoDescricao() {
+		return contatoDescricao;
+	}
+	public void setContatoDescricao(String contatoDescricao) {
+		this.contatoDescricao = contatoDescricao;
+	}
+	
 }

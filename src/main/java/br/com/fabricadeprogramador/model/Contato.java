@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity
-@Data
 public class Contato {
 
 	@Id
@@ -25,16 +24,11 @@ public class Contato {
 	
 	@JoinColumn
 	@ManyToOne
-	private TipoContato tipoContato = new TipoContato();
+	private TipoContato tipoContato;
 
+	
 	public Cliente getCliente() {
 		return cliente;
-	}
-
-	@Override
-	public String toString() {
-		return "Contato [id=" + id + ", descricao=" + descricao + ", cliente=" + cliente + ", tipoContato="
-				+ tipoContato + "]";
 	}
 
 	public void setCliente(Cliente cliente) {
@@ -63,6 +57,43 @@ public class Contato {
 
 	public void setTipoContato(TipoContato tipoContato) {
 		this.tipoContato = tipoContato;
+	}
+	
+	@Override
+	public String toString() {
+		return "Contato [id=" + id + ", descricao=" + descricao + ", cliente=" + cliente + ", tipoContato="
+				+ tipoContato + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contato other = (Contato) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
 	

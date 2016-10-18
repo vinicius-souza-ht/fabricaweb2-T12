@@ -7,52 +7,92 @@
 <h:head></h:head>
 <body>
 
-	<h1>Cadastro de Cliente</h1>
+	<h1># Cadastro de Cliente</h1>
 
 	<h:form id="frmCliente">
-		Nome: <h:inputText value="#{clienteController.cliente.nome}" />
+		Nome: 
+			<h:inputText value="#{clienteController.cliente.nome}" />
+			
+		<br/>
+		<br/>
+		Estado: 
+		<h:selectOneMenu 
+			value="#{clienteController.cliente.estado}"
+			converter="#{estadoConverter}">
+			<f:selectItem 
+				noSelectionOption="true" 
+				itemValue=""
+				itemLabel=".:Selecione:." />
+			<f:selectItems 
+				value="#{estadoController.estados}" 
+				var="e"
+				itemLabel="#{e.uf}" />
+		</h:selectOneMenu>
+		
+		<br/>
+		<br/>
 		Contato:
-			<h:selectOneMenu id="frmTipoContato" value="#{clienteController.contato.tipoContato}" converter="#{tipoContatoConverter}">
-					<f:selectItem noSelectionOption="true"  itemValue="" itemLabel=".:Selecione:."/>
-					<f:selectItems value="#{tipoContatoController.tipoContatos}" var="tc" itemLabel="#{tc.descricao}"/>					
+			<h:selectOneMenu 
+				id="frmTipoContato" 
+				value="#{clienteController.contato.tipoContato}"
+				converter="#{tipoContatoConverter}">
+			<f:selectItem 
+				noSelectionOption="true" 
+				itemValue=""
+				itemLabel=".:Selecione:." />
+			<f:selectItems 
+				value="#{tipoContatoController.tipoContatos}" 
+				var="tc"
+				itemLabel="#{tc.descricao}" />
 			</h:selectOneMenu>
-				<h:inputText id="frmContato" value="#{clienteController.contato.descricao}" />
-				<h:commandButton action="#{clienteController.salvarContato}" value="+">
-				<f:ajax execute="frmContato frmTipoContato" render="frmContato dtContato frmTipoContato"></f:ajax>
-				</h:commandButton>
-		Estado: <h:selectOneMenu value="#{clienteController.cliente.estado}" converter="#{estadoConverter}">
-					<f:selectItem noSelectionOption="true"  itemValue="" itemLabel=".:Selecione:."/>
-					<f:selectItems value="#{estadoController.estados}" var="e" itemLabel="#{e.uf}"/>
-				</h:selectOneMenu>
-		
-		
-		<h:commandButton action="#{clienteController.salvar}" value="Salvar">
-			<f:ajax execute="frmCliente" render="frmCliente"></f:ajax>
-		</h:commandButton>
-		
-		<h:commandButton rendered="#{clienteController.modoEdicao}" action="#{clienteController.cancelar}" value="Cancelar">
-			<f:ajax render="frmCliente"></f:ajax>
-		</h:commandButton>
 
-		<h:dataTable border="1" value="#{clienteController.cliente.contatos}" var="co"
-		 id="dtContato">
-		 	<h:column>
-			<f:facet name="header">Tipo Contato</f:facet>
-			#{co.tipoContato.descricao}
-			</h:column>
+		<h:outputText value="&#160;" />
+		<h:inputText id="frmContato" value="#{clienteController.contato.descricao}" />
+		<h:outputText value="&#160;" />
+		
+		<h:commandButton action="#{clienteController.salvarContato}" value="+">
+			<f:ajax execute="frmContato frmTipoContato" render="frmContato dtContato frmTipoContato"/>
+		</h:commandButton>
+		
+		<br/>
+		<br/>
+		<!-- DataTable Contato -->
+		<h:dataTable border="1" value="#{clienteController.cliente.contatos}"
+			var="co" id="dtContato">
+			
 			<h:column>
-			<f:facet name="header">Descrição</f:facet>
-			#{co.descricao}
+				<f:facet name="header">Tipo Contato</f:facet>
+				#{co.tipoContato.descricao}
 			</h:column>
-					<h:column>
+			
+			<h:column>
+				<f:facet name="header">Descrição</f:facet>
+				#{co.descricao}
+			</h:column>
+			
+			<h:column>
 				<f:facet name="header">Ação</f:facet>
-				<h:commandButton action="#{clienteController.excluirContato(co)}" value="-" onclick="return window.confirm('Certeza?')" >
-					<f:ajax render="frmCliente:dtContato"/>
+				<h:commandButton action="#{clienteController.excluirContato(co)}"
+								 value="-" >
+					<f:ajax render="frmCliente:dtContato" />
 				</h:commandButton>
-				</h:column>
+			</h:column>
 		</h:dataTable>
+		
+		<br/>
+		<h:commandButton action="#{clienteController.salvar}" value="Salvar">
+			<f:ajax execute="frmCliente" render="frmCliente"/>
+		</h:commandButton>
 
-		<h:dataTable value="#{clienteController.clientes}" var="c"
+		<h:commandButton rendered="#{clienteController.modoEdicao}"
+			action="#{clienteController.cancelar}" value="Cancelar">
+			<f:ajax render="frmCliente"/>
+		</h:commandButton>
+
+		<br/>
+		<br/>
+
+		<h:dataTable border="1" value="#{clienteController.clientes}" var="c"
 			id="dtCliente">
 			<h:column>
 				<f:facet name="header">ID</f:facet>
@@ -62,26 +102,28 @@
 				<f:facet name="header">Nome</f:facet>
 				#{c.nome}
 			</h:column>
-		
+
 			<h:column>
 				<f:facet name="header">UF</f:facet>
 				#{c.estado.uf}
 			</h:column>
-			
-			
+
+
 			<h:column>
 				<f:facet name="header">Ação</f:facet>
-				<h:commandButton action="#{clienteController.excluir(c)}" value="Excluir" onclick="return window.confirm('Certeza?')" >
-					<f:ajax  render="frmCliente:dtCliente"/>
+				<h:commandButton action="#{clienteController.excluir(c)}"
+					value="Excluir" onclick="return window.confirm('Certeza?')">
+					<f:ajax render="frmCliente:dtCliente" />
 				</h:commandButton>
-				
-				<h:commandButton action="#{clienteController.editar(c)}" value="Editar" >
-					<f:ajax  render="frmCliente"/>
+
+				<h:commandButton action="#{clienteController.editar(c)}"
+					value="Editar">
+					<f:ajax render="frmCliente" />
 				</h:commandButton>
-				
+
 			</h:column>
-			
-			
+
+
 		</h:dataTable>
 	</h:form>
 

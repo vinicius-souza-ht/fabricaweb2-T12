@@ -18,14 +18,13 @@ public class TipoContatoConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		System.out.println("valor " + value);
 		if (value.isEmpty())
 			return null;
 		try {
 			TipoContato tipoContato = tipoContatoRepository.findOne(new Long(value));
-			System.out.println(tipoContato);
 			return tipoContato;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

@@ -30,12 +30,7 @@ public class ClienteController {
 	
 	private Contato contato = new Contato();
 	
-	public Contato getContato() {
-		return contato;
-	}
-	public void setContato(Contato contato) {
-		this.contato = contato;
-	}
+	
 	@PostConstruct
 	public void init() {
 		setClientes(clienteRepository.buscarTodos());
@@ -68,7 +63,6 @@ public class ClienteController {
 		
 		
 		contato.setCliente(cliente);
-		System.out.println(contato);
 		cliente.getContatos().add(contato);
 		contato = new Contato();
 		
@@ -76,7 +70,6 @@ public class ClienteController {
 	}
 	
 	public void excluirContato(Contato contato){
-		System.out.println(contato.getDescricao());
 		cliente.getContatos().remove(contato);
 		
 				for (Contato co : cliente.getContatos()) {
@@ -111,5 +104,11 @@ public class ClienteController {
 	public void setContatoDescricao(String contatoDescricao) {
 		this.contatoDescricao = contatoDescricao;
 	}
+	public Contato getContato() {
+		return contato;
+	}
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}	
 	
 }

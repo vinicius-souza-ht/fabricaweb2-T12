@@ -69,4 +69,10 @@ public class Cliente {
 	public void setContatos(List<Contato> contatos) {
 		this.contatos = contatos;
 	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nome=" + nome + ", estado=" + estado + ", contatos=" + contatos + "]";
+	}
+	
 }

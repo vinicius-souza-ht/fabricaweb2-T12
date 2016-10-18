@@ -11,9 +11,14 @@
 
 	<h:form id="frmCliente">
 		Nome: <h:inputText value="#{clienteController.cliente.nome}" />
-		Contato:<h:inputText id="frmContato" value="#{clienteController.contatoDescricao}" />
+		Contato:
+			<h:selectOneMenu id="frmTipoContato" value="#{clienteController.contato.tipoContato}" converter="#{tipoContatoConverter}">
+					<f:selectItem noSelectionOption="true"  itemValue="" itemLabel=".:Selecione:."/>
+					<f:selectItems value="#{tipoContatoController.tipoContatos}" var="tc" itemLabel="#{tc.descricao}"/>					
+			</h:selectOneMenu>
+				<h:inputText id="frmContato" value="#{clienteController.contato.descricao}" />
 				<h:commandButton action="#{clienteController.salvarContato}" value="+">
-				<f:ajax execute="frmContato" render="frmContato dtContato"></f:ajax>
+				<f:ajax execute="frmContato frmTipoContato" render="frmContato dtContato frmTipoContato"></f:ajax>
 				</h:commandButton>
 		Estado: <h:selectOneMenu value="#{clienteController.cliente.estado}" converter="#{estadoConverter}">
 					<f:selectItem noSelectionOption="true"  itemValue="" itemLabel=".:Selecione:."/>
@@ -31,6 +36,10 @@
 
 		<h:dataTable border="1" value="#{clienteController.cliente.contatos}" var="co"
 		 id="dtContato">
+		 	<h:column>
+			<f:facet name="header">Tipo Contato</f:facet>
+			#{co.tipoContato.descricao}
+			</h:column>
 			<h:column>
 			<f:facet name="header">Descrição</f:facet>
 			#{co.descricao}

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.fabricadeprogramador.model.Cliente;
 import br.com.fabricadeprogramador.model.Contato;
+import br.com.fabricadeprogramador.model.TipoContato;
 import br.com.fabricadeprogramador.repository.ClienteRepository;
 
 @Named
@@ -27,6 +28,14 @@ public class ClienteController {
 	
 	private String contatoDescricao;
 	
+	private Contato contato = new Contato();
+	
+	public Contato getContato() {
+		return contato;
+	}
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}
 	@PostConstruct
 	public void init() {
 		setClientes(clienteRepository.buscarTodos());
@@ -56,11 +65,14 @@ public class ClienteController {
 	}
 	
 	public void salvarContato(){
-		Contato contato = new Contato();
-		contato.setDescricao(contatoDescricao);
+		
+		
 		contato.setCliente(cliente);
+		System.out.println(contato);
 		cliente.getContatos().add(contato);
-		contatoDescricao = "";
+		contato = new Contato();
+		
+		
 	}
 	
 	public void excluirContato(Contato contato){
